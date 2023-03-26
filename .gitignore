@@ -1,0 +1,11 @@
+# Ignore local development settings
+.env
+
+# Ignore logs and other temporary files
+*.log
+*.tmp
+*.swp
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db

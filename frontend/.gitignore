@@ -1,0 +1,12 @@
+# Ignore Node.js dependencies
+node_modules/
+
+# Ignore Next.js-generated files
+out/
+.cache/
+.next/
+
+# Ignore Visual Studio Code files
+.vscode/
+*.code-workspace
+
