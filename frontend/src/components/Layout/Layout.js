@@ -1,16 +1,11 @@
 import Styles from "./Layout.module.css";
 
-export function Layout(props) {
+export default function Layout(props) {
   return (
     <>
-      <header className={Styles.header}>
-        <h1>header</h1>
-      </header>
-
+      <header className={Styles.header}>header</header>
       <main>{props.children}</main>
-      <footer className={Styles.footer}>
-        <h1>footer</h1>
-      </footer>
+      <footer className={Styles.footer}>footer</footer>
     </>
   );
 }
