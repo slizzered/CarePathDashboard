@@ -1,45 +1,43 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 import cachetools
 import sqlite3
-
 import time
+from mockup_data import mockup_db
+from utils import sqlite_tools
+
+# generate mockup data
+mockup_db.create_ignorePatient('mydb.sqlite')
+mockup_db.create_mockupPatient('mydb.sqlite', random_seed=5)
 
 
-# create a new database file
-conn = sqlite3.connect('mydb.sqlite')
-# create a new table to store the values
-conn.execute('''CREATE TABLE IF NOT EXISTS IgnorePatient
-                (id STRING PRIMARY KEY, EntryCreationDateTime DATETIME)''')
-# insert some values into the table
-values = [('z123', sqlite3.datetime.datetime.now()),
-          ('z456', sqlite3.datetime.datetime.now()),
-          ('z789', sqlite3.datetime.datetime.now())]
-conn.executemany('INSERT OR IGNORE INTO IgnorePatient (id, EntryCreationDateTime) VALUES (?, ?)', values)
-# commit the changes to the database
-conn.commit()
-
-
+# connect to local database file
+conn_local = sqlite3.connect('mydb.sqlite')
 cache = cachetools.TTLCache(maxsize=100, ttl=3)
 app = FastAPI()
 
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def root():
     now = cache.get("now")
     if now is None:
         now = time.ctime()
         cache["now"] = now
-    return {"message": f"Hello World. The current time is {now}"}
+    return f'''the following API Endpoints are available:<br>
+            <a href='/ignoredPatients'>ignoredPatients</a><br>
+            <a href='/ersteRTsMockup'>ersteRTsMockup</a>'''
 
 
 @app.get("/ignoredPatients")
 async def get_ignored_patients():
-    result = conn.execute('''SELECT * FROM IgnorePatient''')
-    return result
+    cursor = conn_local.execute('''SELECT * FROM IgnorePatient''')
+    return await sqlite_tools.cursor_to_json(cursor)
+
+@app.get("/ersteRTsMockup")
+async def get_first_rts_mockup():
+    cursor = conn_local.execute('''SELECT * FROM MockupPatient''')
+    return await sqlite_tools.cursor_to_json(cursor)
 
 
-@app.post("/ignoredPatients/{patient_id}")
-async def post_ignored_patient(patient_id: str):
-    conn.execute(f'INSERT OR IGNORE INTO IgnorePatient (id, EntryCreationDateTime) VALUES (?, ?)',
-                 (patient_id, sqlite3.datetime.datetime.now()))
-    conn.commit()
+
+
