@@ -21,26 +21,12 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
  * Use of this source code is governed by an MIT-style license that can be found in the LICENSE file at https://mui.com/x/introduction/licensing/
  */
 
-function createData(beginRT, calories, fat, carbs, protein, price) {
+function createData(beginRT, patient, blocking_task, progress_overview) {
   return {
     beginRT,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    history: [
-      {
-        date: "2020-01-05",
-        customerId: "11091700",
-        amount: 3,
-      },
-      {
-        date: "2020-01-02",
-        customerId: "Anonymous",
-        amount: 1,
-      },
-    ],
+    patient,
+    blocking_task,
+    progress_overview,
   };
 }
 
@@ -50,8 +36,8 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow className={Styles.table_row} sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell className={Styles.table_cell}>
+      <tr className={Styles.table_row}>
+        <td className={Styles.table_cell}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -59,50 +45,27 @@ function Row(props) {
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
-        </TableCell>
-        <TableCell className={Styles.table_cell} component="th" scope="row">
+        </td>
+        <td className={Styles.table_cell} component="th" scope="row">
           {row.beginRT}
-        </TableCell>
-        <TableCell className={Styles.table_cell} align="right">{row.calories}</TableCell>
-        <TableCell className={Styles.table_cell} align="right">{row.fat}</TableCell>
-        <TableCell className={Styles.table_cell} align="right">{row.carbs}</TableCell>
-        <TableCell className={Styles.table_cell} align="right">{row.protein}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        </td>
+        <td className={Styles.table_cell} align="right">
+          {row.patient}
+        </td>
+        <td className={Styles.table_cell} align="right">
+          {row.blocking_task}
+        </td>
+        <td className={Styles.table_cell} align="right">
+          {row.progress_overview}
+        </td>
+      </tr>
+      <tr>
+        <td style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                History
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
+            <h1>TestTest</h1>
           </Collapse>
-        </TableCell>
-      </TableRow>
+        </td>
+      </tr>
     </React.Fragment>
   );
 }
@@ -121,45 +84,53 @@ Row.propTypes = {
     ).isRequired,
     beginRT: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
   }).isRequired,
 };
 
 const rows = [
-  createData("2h erste RT Hyperarc", 159, 6.0, 24, 4.0, 3.99),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3, 4.99),
-  createData("Eclair", 262, 16.0, 24, 6.0, 3.79),
-  createData("Cupcake", 305, 3.7, 67, 4.3, 2.5),
-  createData("Gingerbread", 356, 16.0, 49, 3.9, 1.5),
+  createData(
+    "2h erste RT Hyperarc",
+    "Olaf",
+    "OARs einzeichnen",
+    "in Bearbeitung",
+    4.0
+  ),
+  createData("5h erste RT", "Ralf", "PD vorbereiten", "Offen", 4.3),
+  createData(
+    "5h RT Boost",
+    "Manuela",
+    "PTV einzeichnen",
+    "in Bearbeitung",
+    6.0
+  ),
+  createData("10h erste RT", "Fritz", "Arzt Freigabe", "Verfügbar", 4.3),
+  createData("12h erste RT", "Maike", "PTV anpassen", "in Bearbeitung", 3.9),
 ];
 
 export default function CollapsibleTable() {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component="div">
       <Table aria-label="collapsible table">
-        <TableHead className={Styles.table__header}>
-          <TableRow className={Styles.table_row}>
-            <TableCell />
-            <TableCell className={Styles.table_cell} > Behandlungsbeginn </TableCell>
-            <TableCell className={Styles.table_cell} align="right">
+        <thead className={Styles.table_header}>
+          <tr className={Styles.table_row}>
+            <th />
+            <th className={Styles.table_cell}> Behandlungsbeginn </th>
+            <th className={Styles.table_cell} align="right">
               Patient(-ID)
-            </TableCell>
-            <TableCell className={Styles.table_cell} align="right">
+            </th>
+            <th className={Styles.table_cell} align="right">
               Blocking Task
-            </TableCell>
-            <TableCell className={Styles.table_cell} align="right">
+            </th>
+            <th className={Styles.table_cell} align="right">
               Progress Overview
-            </TableCell>
-            <TableCell className={Styles.table_cell} align="right">
-              Protein&nbsp;(g)
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
           {rows.map((row) => (
             <Row key={row.beginRT} row={row} />
           ))}
-        </TableBody>
+        </tbody>
       </Table>
     </TableContainer>
   );

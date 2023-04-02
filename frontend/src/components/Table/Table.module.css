@@ -1,3 +1,11 @@
-.table__header {
+.table_header {
     font-weight: bold;
 }
+
+.table_row {
+    border-bottom: 1px solid grey;
+  }
+  
+  .table__row--last {
+    border-bottom: 0;
+  }
