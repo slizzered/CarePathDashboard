@@ -1,17 +1,7 @@
 import Styles from "./Table.module.css";
 import * as React from "react";
-import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
@@ -36,8 +26,8 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <tr className={Styles.table_row}>
-        <td className={Styles.table_cell}>
+      <div className={Styles.table_row}>
+        <div className={Styles.table_cell}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -45,47 +35,18 @@ function Row(props) {
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
-        </td>
-        <td className={Styles.table_cell} component="th" scope="row">
-          {row.beginRT}
-        </td>
-        <td className={Styles.table_cell} align="right">
-          {row.patient}
-        </td>
-        <td className={Styles.table_cell} align="right">
-          {row.blocking_task}
-        </td>
-        <td className={Styles.table_cell} align="right">
-          {row.progress_overview}
-        </td>
-      </tr>
-      <tr>
-        <td style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <h1>TestTest</h1>
-          </Collapse>
-        </td>
-      </tr>
+        </div>
+        <div className={Styles.table_cell}>{row.beginRT}</div>
+        <div className={Styles.table_cell}>{row.patient}</div>
+        <div className={Styles.table_cell}>{row.blocking_task}</div>
+        <div className={Styles.table_cell}>{row.progress_overview}</div>
+      </div>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <h1>TestTest</h1>
+      </Collapse>
     </React.Fragment>
   );
 }
-
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    beginRT: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-  }).isRequired,
-};
 
 const rows = [
   createData(
@@ -109,29 +70,17 @@ const rows = [
 
 export default function CollapsibleTable() {
   return (
-    <TableContainer component="div">
-      <Table aria-label="collapsible table">
-        <thead className={Styles.table_header}>
-          <tr className={Styles.table_row}>
-            <th />
-            <th className={Styles.table_cell}> Behandlungsbeginn </th>
-            <th className={Styles.table_cell} align="right">
-              Patient(-ID)
-            </th>
-            <th className={Styles.table_cell} align="right">
-              Blocking Task
-            </th>
-            <th className={Styles.table_cell} align="right">
-              Progress Overview
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <Row key={row.beginRT} row={row} />
-          ))}
-        </tbody>
-      </Table>
-    </TableContainer>
+    <div className={Styles.table_container}>
+      <div className={Styles.table_header}>
+        <div className={Styles.table_cell} />
+        <div className={Styles.table_cell}> Behandlungsbeginn </div>
+        <div className={Styles.table_cell}>Patient(-ID)</div>
+        <div className={Styles.table_cell}>Blocking Task</div>
+        <div className={Styles.table_cell}>Progress Overview</div>
+      </div>
+      {rows.map((row) => (
+        <Row key={row.beginRT} row={row} />
+      ))}
+    </div>
   );
 }

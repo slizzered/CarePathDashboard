@@ -1,11 +1,17 @@
 .table_header {
-    font-weight: bold;
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 .table_row {
-    border-bottom: 1px solid grey;
-  }
-  
-  .table__row--last {
-    border-bottom: 0;
-  }
+  border-bottom: 1px solid grey;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.table_container {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 2rem;
+}
