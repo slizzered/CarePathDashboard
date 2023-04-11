@@ -1,7 +1,34 @@
 .header {
-    color: red;
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+}
+
+.header_bar {
+  background-color: white;
+  height: 60px;
+}
+
+.main {
+  padding-top: 60px;    /* equals height of header_bar */
+  padding-bottom: 40px; /* equals height of footer_bar */
 }
 
 .footer {
-    color: red;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+.footer_bar {
+  margin-top: 2rem;
+  background-color: white;
+  height: 40px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.legal_informations {
+  padding: 8px;
 }
