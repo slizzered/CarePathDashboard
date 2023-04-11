@@ -1,17 +1,41 @@
 .table_header {
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(0, 0, 0, 0.12);
   font-weight: bold;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.1fr 0.2fr 1fr 1fr 1fr 1fr;
+  text-transform: uppercase;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 0.75rem;
 }
 
 .table_row {
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(0, 0, 0, 0.12);
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  grid-template-columns: 0.1fr 0.2fr 1fr 1fr 1fr 1fr;
 }
 
 .table_container {
-  width: 100%;
+  width: 90%;
   margin: 0 auto;
   margin-top: 2rem;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.table_cell {
+  padding: 0 16px;
+  text-align: left;
+  height: 67px;
+  line-height: 67px;
+}
+
+.table_cell_begin_rt {
+  padding: 0 16px;
+  text-align: right;
+  height: 67px;
+  line-height: 67px;
 }
